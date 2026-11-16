@@ -126,6 +126,7 @@ export class TomatoTimerView extends ItemView {
         const days = await parseLogs(this.app, this.plugin.settings);
         const total = totalTomatos(days);
         const week = last7Days(days);
+		const weekTotal = week.reduce((sum, d) => sum + d.count, 0);
         const todayStr = todayString();
         const todayRecord = days.find(d => d.date === todayStr);
 
@@ -161,7 +162,7 @@ export class TomatoTimerView extends ItemView {
         const weekHeader = weekSection.createDiv({ cls: 'Tomato-history-heading' });
         weekHeader.createSpan({ text: 'This week' });
         if (total > 0) {
-            weekHeader.createSpan({ cls: 'Tomato-total', text: `🍅 ${total} total` });
+            weekHeader.createSpan({ cls: 'Tomato-total', text: `🍅 ${weekTotal} total` });
         }
 
         const maxCount = Math.max(...week.map(d => d.count), 1);
